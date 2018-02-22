@@ -78,6 +78,7 @@
             }
     }
 
+//haha
     function addProvider(address providerAddress) public {
         var pro = provider[providerAddress];
         pro._providerAddress = providerAddress;
