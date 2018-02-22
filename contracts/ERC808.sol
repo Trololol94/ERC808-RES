@@ -56,7 +56,8 @@
             }
     }
 
-    function addAvailabilities(uint ressourceID, 
+    function addAvailabilities(
+                            uint ressourceID, 
                             uint ressourceType, 
                             uint minDeposit, 
                             BookingStatus status, 
@@ -67,6 +68,7 @@
                             string metaDataLink) public {
             if (isProvider(msg.sender)) {
                     var avail = availability[ressourceID];
+                    avail._provider = msg.sender;
                     avail._type = ressourceType;
                     avail._minDeposit = minDeposit;
                     avail._bookingStatus = status;
@@ -86,9 +88,8 @@
         providerList.push(pro)-1;
     }
 
-    function getProvider(address providerAd) constant public returns (address) {
-        provider[providerAd]._providerAddress;
-        provider[providerAd]._name;
+    function getProvider(address providerAd) constant public returns (address, string) {
+        return (provider[providerAd]._providerAddress, provider[providerAd]._name);
     }
 
     function getAvailability(uint _id) constant public returns (uint, uint, uint, uint, uint, uint, BookingStatus) {
