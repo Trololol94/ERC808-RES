@@ -26,11 +26,33 @@
     mapping(uint => Availability) private availability;
     Availability[] availList;
 
-    mapping(uint => Provider) private provider;
+    mapping(address => Provider) public provider;
     Provider[] providerList;
 
     function getListAvailabilities() view public returns (Availability[]) {
             return availList;
+    }
+
+    function displayAvailabilities() view public {
+        for (uint i = 0; i < availList.length; i++) {
+            Availability memory av = availList[i];
+            getAvailability(av._resourceId);
+            getMetadata(av._resourceId);
+        }
+    }
+
+    function isProvider(address providerAddress)
+        private 
+        constant
+        returns(bool isIndeed) 
+        {
+            if (providerList.length == 0) 
+                return false;
+            for (uint i = 0; i < providerList.length; i++) {
+                if (providerList[i]._providerAddress == providerAddress) {
+                    return true;
+                }
+            }
     }
 
     function addAvailabilities(uint ressourceID, 
@@ -42,16 +64,28 @@
                             uint startDate, 
                             uint endDate,
                             string metaDataLink) public {
-        var avail = availability[ressourceID];
-        avail._type = ressourceType;
-        avail._minDeposit = minDeposit;
-        avail._bookingStatus = status;
-        avail._commission = commission;
-        avail._freeCancelDate = freeCancelDate;
-        avail._startDate = startDate;
-        avail._endDate = endDate;
-        avail._metaDataLink = metaDataLink;
-        availList.push(avail)-1;
+            if (isProvider(msg.sender)) {
+                    var avail = availability[ressourceID];
+                    avail._type = ressourceType;
+                    avail._minDeposit = minDeposit;
+                    avail._bookingStatus = status;
+                    avail._commission = commission;
+                    avail._freeCancelDate = freeCancelDate;
+                    avail._startDate = startDate;
+                    avail._endDate = endDate;
+                    avail._metaDataLink = metaDataLink;
+                    availList.push(avail)-1;
+            }
+    }
+
+    function addProvider(address providerAddress) public {
+        var pro = provider[providerAddress];
+        pro._providerAddress = providerAddress;
+        providerList.push(pro)-1;
+    }
+
+    function getProvider(address providerAd) view public returns (address) {
+        provider[providerAd]._providerAddress;
     }
 
     function getAvailability(uint _id) view public returns (uint, uint, uint, uint, uint, uint, BookingStatus) {
