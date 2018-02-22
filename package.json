@@ -1,0 +1,26 @@
+{
+  "name": "ERC808-RES",
+  "version": "1.0.0",
+  "description": "\"THIS PROJECT has been developed during ETNA Codecamp and is a student work. It is not an official implementation of the Booking Token Unit protocol and does not claim to be compliant with ERC-808\"",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trololol94/ERC808-RES.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Trololol94/ERC808-RES/issues"
+  },
+  "homepage": "https://github.com/Trololol94/ERC808-RES#readme",
+  "dependencies": {
+    "zeppelin-solidity": "1.7.0"
+  }
+}
