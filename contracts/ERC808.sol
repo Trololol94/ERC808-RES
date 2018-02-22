@@ -20,16 +20,17 @@
 
     struct Provider {
         address _providerAddress;
+        string _name;
         mapping(bytes32 => Availability) availabilities;
     }
     
     mapping(uint => Availability) private availability;
     Availability[] availList;
 
-    mapping(address => Provider) public provider;
+    mapping(address => Provider) private provider;
     Provider[] providerList;
 
-    function getListAvailabilities() view public returns (Availability[]) {
+    function getListAvailabilities() constant public returns (Availability[]) {
             return availList;
     }
 
@@ -78,18 +79,19 @@
             }
     }
 
-//haha
-    function addProvider(address providerAddress) public {
+    function addProvider(address providerAddress, string name) public {
         var pro = provider[providerAddress];
         pro._providerAddress = providerAddress;
+        pro._name = name;
         providerList.push(pro)-1;
     }
 
-    function getProvider(address providerAd) view public returns (address) {
+    function getProvider(address providerAd) constant public returns (address) {
         provider[providerAd]._providerAddress;
+        provider[providerAd]._name;
     }
 
-    function getAvailability(uint _id) view public returns (uint, uint, uint, uint, uint, uint, BookingStatus) {
+    function getAvailability(uint _id) constant public returns (uint, uint, uint, uint, uint, uint, BookingStatus) {
         return (
             availability[_id]._type, 
             availability[_id]._minDeposit, 
@@ -100,7 +102,7 @@
             availability[_id]._bookingStatus);
     }
 
-    function getMetadata(uint _id) view public returns (string) {
+    function getMetadata(uint _id) constant public returns (string) {
             return   availability[_id]._metaDataLink;
     }
 
