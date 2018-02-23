@@ -107,6 +107,20 @@ function getAvailability(uint _id) constant public returns (uint, uint, uint, ui
         availability[_id]._bookingStatus);
 }
 
+function getReservationStatus(address _requester, Availability _availability) constant returns (BookingStatus status){
+
+       for (uint i = 0; i < availList.length; i++){
+
+            if (availList[i]._resourceId == _availability._resourceId){
+
+                return availList[i]._bookingStatus;
+
+            }
+
+        }
+
+}
+
 function getMetadata(uint _id) constant public returns (string) {
         return   availability[_id]._metaDataLink;
 }
