@@ -111,22 +111,33 @@ function getMetadata(uint _id) constant public returns (string) {
         return   availability[_id]._metaDataLink;
 }
 
-  function requestReservation(address _requester, Availability _availability) public constant returns (uint status){
+function requestReservation(address _requester, Availability _availability) public constant returns (uint status){
+
     for (uint i = 0; i < availList.length; i++){
-      if (availList[i]._resourceId == _availability._resourceId){
-        if (uint(availList[i]._bookingStatus) != 0 || uint(availList[i]._bookingStatus) != 2){
-          availList[i]._bookingStatus = BookingStatus.REQUESTED;
-          if (brick.approveAndCall(_requester, _availability._commission, bytes(_availability._metaDataLink))){
-            availList[i]._bookingStatus = BookingStatus.CONFIRMED;
-            brick.transfer(_requester, _availability._commission);
-            return(0);
-          }
-          else{
-            availList[i]._bookingStatus = BookingStatus.REJECTED;
-            return(1);
-          }
+
+        if (availList[i]._resourceId == _availability._resourceId){
+
+            if (uint(availList[i]._bookingStatus) != 0 || uint(availList[i]._bookingStatus) != 2){
+
+                availList[i]._bookingStatus = BookingStatus.REQUESTED;
+
+                if (brick.approveAndCall(_requester, _availability._commission, bytes(_availability._metaDataLink))){
+
+                    availList[i]._bookingStatus = BookingStatus.CONFIRMED;
+                    brick.transfer(_requester, _availability._commission);
+                    return(0);
+                }
+
+                else
+
+                    availList[i]._bookingStatus = BookingStatus.REJECTED;
+                    return(1);
+
+            }
         }
-      }
+
     }
-  }
+
+}
+
 }
